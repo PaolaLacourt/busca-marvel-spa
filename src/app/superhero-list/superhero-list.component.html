@@ -1,0 +1,85 @@
+<div class="hero-list">
+  <!-- Barra de pesquisa -->
+  <div class="search-wrapper">
+    <label for="search" class="search-label">Nome do personagem</label>
+    <input type="text" id="search" class="search-bar" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
+  </div>
+
+  <!-- Lista de heróis em três colunas -->
+  <div class="hero-columns">
+    <div class="hero-column1">
+      <ul style="list-style: none; margin-right: -30px;">
+        <div class="red-bar25">Personagem</div>
+        <li *ngFor="let hero of filteredHeroes">
+          <!-- Column 1: Img and name of hero -->     
+            <div class="hero-card">     
+            <a href="#modal">
+            <img [src]="hero.thumbnail.path + '.' + hero.thumbnail.extension" alt="{{ hero.name }}" /></a>        
+            <div class="hero-info">
+              <h3>{{ hero.name }}</h3>             
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero-column2">
+      <ul style="list-style: none; margin-right: -30px;">
+        <div class="red-bar25">Séries</div>
+        <li *ngFor="let hero of filteredHeroes">
+          <!-- Column 2: Series (max 3) -->
+          <div class="hero-card">
+            <ul>
+              <li *ngFor="let series of hero.series.items.slice(0, 3)">{{ series.name }}</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero-column3">
+      <ul style="list-style: none;">
+        <div class="red-bar50">Eventos</div>
+        <li *ngFor="let hero of filteredHeroes">
+          <!-- Column 3: Events (max 3) -->
+          <div class="hero-card">
+            <ul>
+              <li *ngFor="let event of hero.events.items.slice(0, 3)">{{ event.name }}</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+<div class="pagination">
+  <button class="previous" (click)="previousPage()" [disabled]="currentPage === 1"></button>
+  <div class="page-numbers">
+    <span *ngFor="let page of calculateVisiblePages()" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</span>
+  </div>
+  <button class="next" (click)="nextPage()" [disabled]="currentPage === totalPages"></button>
+</div>
+
+<div class="red-bar"></div>
+
+</div>
+
+ <!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal__content">
+    <h1>Descrição do personagem</h1>
+    <p>
+      Detalhes do Super-herói
+    </p>
+    <a href="#" class="modal__close">&times;</a>
+  </div>
+</div>
+
+
+
+
+
+
+
+
